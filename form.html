@@ -1,142 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Page</title>
+    <title>Registration Form</title>
     <style>
-        *{
-            padding: 0;
-            margin: 0;
-            font-family: sans-serif;
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            padding-top: 50px;
         }
 
-        .sign_up{
-            height: 100vh;
-            background-color: aliceblue;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        h1 {
+            color: #333;
         }
 
-        .container{
-            background-color: white;
-            width: 380px;
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px #aaa;
+            width: 400px;
+            margin: 0 auto;
         }
 
-        h1{
-            color: black;
-            font-size: 30px;
-        }
-
-        h1::before{
-            content: "";
+        label {
             display: block;
-            width: 100px;
-            height: 3px;
-            background: black;
-            left: 540px;
-            top: 29%;
-            position: absolute;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+            text-align:center;
         }
 
-        h1::after{
-            content: "";
-            display: block;
-            width: 100px;
-            height: 3px;
-            background: black;
-            right: 540px;
-            top: 29%;
-            position: absolute;
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 70%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
         }
 
-        input{
-            padding: 6px;
-            margin-top: 10px;
-            margin-left: 10px;
+        input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
         }
 
-        .details input{
-        width: 335px;
+        input[type="submit"]:hover {
+            background-color: #555;
         }
 
-        .details{
-            display: flex;
-            flex-direction: column;
-        }
-
-        .check{
-            display: inline-block;
-        }
-
-        #register_btn{
-            text-decoration: none;
-            padding: 10px 120px;
-            border: 1px solid green;
-            background: green;
-            color: white;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-
-        #register_btn:hover{
-            background: transparent;
-            color: black;
-            border: 1px solid black;
-            transition: .5s;
-        }
-
-        .term a{
-            color: green;
-        }
-
-        #privacy{
-            color: green;
-        }
-
-        .checkbox{
-            width: 355px;
-            margin-top: 10px;
-        }
-
-        .signIn p span a{
-            color: black;
-            margin-left: 6px;
+        #message {
+            margin-top: 15px;
+            color: #333;
         }
     </style>
 </head>
-
 <body>
-    <section class="sign_up">
-        <div class="container">
-            <h1>Register</h1>
-            <div class="name">
-                <input type="text" placeholder="First Name" required>
-                <input type="text" placeholder="Last Name" required>
-            </div>
-            <div class="details">
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Passowrd" required>
-                <input type="password" placeholder="Confirm Password" required>
-            </div>
-            <div class="checkbox">
-                <input type="checkbox" class="check" required>
-                <p class="check">I accept the<span class="term"><a href="#">Terms of use</a></span> & <span><a id="privacy" href="#">Privacy Policy</a></span></p>
-            </div>
-            <a href="" id="register_btn">Register Now</a>
-        </div>
-    </section>
-</body>
+    <h1>Registration Form</h1>
+    <form id="registration-form">
+        <label for="firstname">First Name:</label>
+        <input type="text" id="firstname" name="firstname" required><br><br>
+        
+        <label for="lastname">Last Name:</label>
+        <input type="text" id="lastname" name="lastname" required><br><br>
 
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <input type="submit" value="Register">
+    </form>
+
+    <div id="message"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#registration-form").submit(function (e) {
+                e.preventDefault();
+
+                // Collect form data
+                const formData = {
+                    firstname: $("#firstname").val(),
+                    lastname: $("#lastname").val(),
+                    email: $("#email").val(),
+                    password: $("#password").val()
+                };
+                console.log(firstname,lastname,email,password)
+                // Send data to server using Ajax
+                $.ajax({
+                    type: "POST",
+                    url: "/register",
+                    data: formData,
+                    success: function (response) {
+                        $("#message").html(response);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
 </html>
